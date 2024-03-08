@@ -74,7 +74,7 @@ void usage(void)
 		"Usage:\t -f frequency_to_tune_to [Hz]\n"
 		"\t[-s samplerate (default: 2048000 Hz)]\n"
 		"\t[-d device_index (default: 0)]\n"
-		"\t[-g gain (default: 0 for auto)]\n"
+		"\t[-g gain (default: 0 for auto, negative for software AGC)]\n"
 		"\t[-p ppm_error (default: 0)]\n"
 		"\t[-b output_block_size (default: 16 * 16384)]\n"
 		"\t[-n number of samples to read (default: 0, infinite)]\n"
@@ -140,14 +140,14 @@ void update_gain_pid(int delta){
 	// fprintf(stderr, "%s:somme+delta %d+%d=>%d" "\n", __func__, old_pid_somme, delta, pid_somme);
 }
 
-static void signal_event(int fd){
+static int signal_event(int fd){
 	uint64_t u = 1ULL;
-	write(fd, &u, sizeof(u));
+	return write(fd, &u, sizeof(u));
 }
 
-static void clear_event(int fd){
+static int clear_event(int fd){
 	uint64_t u = 1ULL;
-	read(fd, &u, sizeof(u));
+	return read(fd, &u, sizeof(u));
 }
 
 static int create_event(void){
