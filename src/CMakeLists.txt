@@ -96,7 +96,7 @@ add_executable(rtl_power rtl_power.c)
 add_executable(rtl_biast rtl_biast.c)
 set(INSTALL_TARGETS rtlsdr rtlsdr_static rtl_sdr rtl_tcp rtl_test rtl_fm rtl_eeprom rtl_adsb rtl_power rtl_biast)
 
-target_link_libraries(rtl_sdr rtlsdr convenience_static
+target_link_libraries(rtl_sdr rtlsdr convenience_static m
     ${LIBUSB_LIBRARIES}
     ${CMAKE_THREAD_LIBS_INIT}
 )
